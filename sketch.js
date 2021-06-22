@@ -2,83 +2,100 @@ const Engine = Matter.Engine;
 const World= Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
-
 var engine, world;
+var ground;
+var stand1, stand2, stand3, stand4, stand5, stand6, stand7;
 
+var particle;
 var particles = [];
 var plinkos = [];
-var divisions = [];
+var divisions=[];
+var divisionHeight=300;
 
-var divisionHeight = 300;
-
-var ground;
 
 function setup()
 {
-  createCanvas(490, 800);
-  //createSprite(400, 200, 50, 50);
-
+  createCanvas(480,800);
   engine = Engine.create();
   world = engine.world;
 
-  for(var j = 15; j <=width; j = j + 30)
+  ground = new Ground(0, 780, 1200, 10);
+
+
+  stand1 = new Division(0, 680, 5, 200);
+  stand2 = new Division(80, 680, 10, 200);
+  stand3 = new Division(170, 680, 10, 200);
+  stand4 = new Division(250, 680, 10, 200);
+  stand5 = new Division(330, 680, 10, 200);
+  stand6 = new Division(410, 680, 10, 200);
+  stand7 = new Division(475, 680, 5, 200);
+
+
+    
+  for (var j = 30; j <=width; j=j+50) 
   {
-    plinkos.push(new Plinko(j, 45, 5, 5));
+  
+     plinkos.push(new Plink(j,75,10));
   }
 
-  for(var j = 30; j <=width; j = j + 30)
+  for (var j = 30; j <=width-10; j=j+50) 
   {
-    plinkos.push(new Plinko(j, 75, 5, 5));
+  
+     plinkos.push(new Plink(j,175,10));
   }
 
-  for(var j = 15; j <=width - 10; j = j + 30)
+   for (var j = 30; j <=width; j=j+50) 
   {
-    plinkos.push(new Plinko(j, 105, 5, 5));
+  
+     plinkos.push(new Plink(j,275,10));
   }
 
-  for(var j = 30; j <=width; j = j + 30)
+   for (var j = 30; j <=width-10; j=j+50) 
   {
-    plinkos.push(new Plinko(j, 135, 5, 5));
+  
+     plinkos.push(new Plink(j,375,10));
+     
   }
 
-  for(var j = 15; j <=width; j = j + 30)
-  {
-    plinkos.push(new Plinko(j, 165, 5, 5));
-  }
-  ground = new Ground(240, 790, 480, 10);
-
-  for(var k = 5; k <=width; k = k + 80)
-  {
-    divisions.push(new Divisions(k, height - divisionHeight/2, 10, divisionHeight));
-  }
+ 
 }
-
+ var divisionHeight;
 function draw() {
-  background(0);
+  background("black");      
+
   Engine.update(engine);
 
   ground.display();
+  stand1.display();
+  stand2.display();
+  stand3.display();
+  stand4.display();
+  stand5.display();
+  stand6.display();
+  stand7.display();
 
-  for(var k = 0; k < divisions.length; k++)
-  {
-    divisions[k].display();
+
+
+  for (var i = 0; i < plinkos.length; i++) {
+     
+    plinkos[i].display();
+    
   }
+  
+  if(frameCount%60===0){
+   particles.push(new Particle(random(width/2-20, width/2+20),10,10));
+    
+ }
 
-  for(var l = 0; l < plinkos.length; l++)
-  {
-    plinkos[l].display();
-  }
-
-  if(frameCount % 60 === 0)
-  {
-    particles.push(new Particle(random(20, 450), 10, 10));
-    console.log(frameCount);
-  }
-
-  for(var j = 0; j < particles.length; j++)
-  {
+ for (var j = 0; j < particles.length; j++) {
+  
     particles[j].display();
   }
+for (var k = 0;k< divisions.length;k++)
+{
+   divisions[k].display;
+}
+   
 
   drawSprites();
 }

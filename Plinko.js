@@ -1,4 +1,4 @@
-class Plinko{
+class Plink{
   constructor(x, y, r)
   {
     var options=
